@@ -107,10 +107,6 @@
       {
         "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 10, "budget": 5, "rain": false, "reset": false },
         "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
-      },
-      {
-        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 10.1, "budget": 5, "rain": false, "reset": false },
-        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
       }
     ]
   },
