@@ -1,0 +1,46 @@
+[
+  {
+    "name": "D01_v21: запуск полива при humidity=39.9 (ниже нового порога 40)",
+    "steps": [
+      {
+        "input": { "humidity": 39.9, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      }
+    ]
+  },
+  {
+    "name": "D02_v21: точная граница humidity=40 (в 2.1 не запускает насос с нуля)",
+    "steps": [
+      {
+        "input": { "humidity": 40, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      }
+    ]
+  },
+  {
+    "name": "D03_v21: удержание насоса при humidity=42 (новая зона гистерезиса 40..45)",
+    "steps": [
+      {
+        "input": { "humidity": 39.9, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 42, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      }
+    ]
+  },
+  {
+    "name": "D04_v21: запуск при humidity=36 и конкуренция за budget=3 с вентиляцией",
+    "steps": [
+      {
+        "input": { "humidity": 36, "temp": 31, "age": 0, "tank": 50, "budget": 3, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": true, "fault": false, "used": 3 }
+      },
+      {
+        "input": { "humidity": 36, "temp": 20, "age": 0, "tank": 50, "budget": 3, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      }
+    ]
+  }
+]

@@ -1,0 +1,294 @@
+[
+  {
+    "name": "T01: R01 внешние границы диапазонов",
+    "steps": [
+      {
+        "input": { "humidity": 0, "temp": -10, "age": 0, "tank": 0, "budget": 0, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 100, "temp": 50, "age": 120, "tank": 100, "budget": 6, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 100, "temp": 50, "age": 30, "tank": 100, "budget": 6, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": true, "fault": false, "used": 3 }
+      },
+      {
+        "input": { "humidity": -0.1, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 100.1, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": -10.1, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 50.1, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": -1, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 121, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 0, "tank": -0.1, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 0, "tank": 100.1, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 0, "tank": 50, "budget": -1, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 0, "tank": 50, "budget": 7, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 0, "tank": 50, "budget": 2.5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      }
+    ]
+  },
+  {
+    "name": "T02: R01 ошибки типов и структуры",
+    "steps": [
+      {
+        "input": { "humidity": null, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": "20", "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": "false", "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 0, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": [50, 20, 0, 50, 5, false, true],
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      }
+    ]
+  },
+  {
+    "name": "T03: R02 границы свежести age и R08 границы воды tank",
+    "steps": [
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 29, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 30, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 31, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 9.9, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 10, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 10.1, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      }
+    ]
+  },
+  {
+    "name": "T04: R04 границы вентиляции и R06 границы холода",
+    "steps": [
+      {
+        "input": { "humidity": 50, "temp": 29.9, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 30, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": true, "fault": false, "used": 3 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 26.1, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": true, "fault": false, "used": 3 }
+      },
+      {
+        "input": { "humidity": 50, "temp": 26, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 3, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 3.1, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      }
+    ]
+  },
+  {
+    "name": "T05: R05 границы гистерезиса полива 35 и 45",
+    "steps": [
+      {
+        "input": { "humidity": 35.1, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 35, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 34.9, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 44.9, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 45, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      }
+    ]
+  },
+  {
+    "name": "T06: R03 удержание аварии fault и восстановление по reset",
+    "steps": [
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 31, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": true, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 40, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": true },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      }
+    ]
+  },
+  {
+    "name": "T07: R06-R08 таблица решений независимости 3 блокировок полива",
+    "steps": [
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 3, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": true, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 9, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      }
+    ]
+  },
+  {
+    "name": "T08: R04-R05 гистерезис История А (старт ON -> удержание)",
+    "steps": [
+      {
+        "input": { "humidity": 20, "temp": 31, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": true, "fault": false, "used": 5 }
+      },
+      {
+        "input": { "humidity": 40, "temp": 28, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": true, "fault": false, "used": 5 }
+      }
+    ]
+  },
+  {
+    "name": "T09: R04-R05 гистерезис История Б (старт OFF -> удержание)",
+    "steps": [
+      {
+        "input": { "humidity": 50, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 40, "temp": 28, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      }
+    ]
+  },
+  {
+    "name": "T10: R09 конкуренция за бюджет (budget 1, 2, 3, 5)",
+    "steps": [
+      {
+        "input": { "humidity": 20, "temp": 31, "age": 0, "tank": 50, "budget": 1, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 31, "age": 0, "tank": 50, "budget": 2, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 31, "age": 0, "tank": 50, "budget": 3, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": true, "fault": false, "used": 3 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 31, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": true, "fault": false, "used": 5 }
+      }
+    ]
+  },
+  {
+    "name": "T11: R10 потеря памяти включения после защитного выключения",
+    "steps": [
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": true, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      },
+      {
+        "input": { "humidity": 40, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      }
+    ]
+  },
+  {
+    "name": "T12: R10 потеря памяти включения после нехватки бюджета",
+    "steps": [
+      {
+        "input": { "humidity": 20, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": true, "vent": false, "fault": false, "used": 2 }
+      },
+      {
+        "input": { "humidity": 20, "temp": 31, "age": 0, "tank": 50, "budget": 3, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": true, "fault": false, "used": 3 }
+      },
+      {
+        "input": { "humidity": 40, "temp": 20, "age": 0, "tank": 50, "budget": 5, "rain": false, "reset": false },
+        "expected": { "pump": false, "vent": false, "fault": false, "used": 0 }
+      }
+    ]
+  }
+]
